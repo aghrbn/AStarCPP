@@ -43,6 +43,13 @@ vector<vector<State>> ReadBoardFile(string path) {
     return board;
 }
 
+bool Compare(const vector<int> vec1, const vector<int> vec2){
+  int f1 = a[2] + a[3]; // f1 = g1 + h1
+  int f2 = b[2] + b[3]; // f2 = g2 + h2
+  return f1 > f2;
+}
+
+// Calculate the manhattan distance
 int Heuristic(int x1, int y1, int x2, int y2){
   return abs(x1 - x2) + abs(y1 - y2);
 }
