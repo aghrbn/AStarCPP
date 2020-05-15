@@ -10,7 +10,7 @@ using std::string;
 using std::vector;
 using std::abs;
 
-enum class State { kEmpty, kObstacle };
+enum class State {kEmpty, kObstacle, kClosed, kPath};
 
 
 vector<State> ParseLine(string line) {
@@ -68,12 +68,39 @@ void AddToOpen(int x, int y, int g, int h,
 /**
  * Implementation of A* search algorithm
  */
-vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2]) {
+ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2]) {
+   // Create the vector of open nodes.
+   vector<vector<int>> open {};
 
+   // Initialize the starting node.
+   int x = init[0];
+   int y = init[1];
+   int g = 0;
+   int h = Heuristic(x, y, goal[0],goal[1]);
+   AddToOpen(x, y, g, h, open, grid);
 
-    cout << "No path found!" << "\n";
-    return std::vector<vector<State>> {};
-}
+   while (open.size() > 0) {
+     // Get the next node
+     CellSort(&open);
+     auto current = open.back();
+     open.pop_back();
+     x = current[0];
+     y = current[1];
+     grid[x][y] = State::kPath;
+
+     // Check if we're done.
+     if (x == goal[0] && y == goal[1]) {
+       return grid;
+     }
+
+     // If we're not done, expand search to current node's neighbors.
+     // ExpandNeighbors
+   }
+
+   // We've run out of new nodes to explore and haven't found a path.
+   cout << "No path found!" << "\n";
+   return std::vector<vector<State>>{};
+ }
 
 string CellString(State cell) {
     switch (cell) {
