@@ -47,6 +47,16 @@ int Heuristic(int x1, int y1, int x2, int y2){
   return abs(x1 - x2) + abs(y1 - y2);
 }
 
+/**
+* adding nodes to the open list (frontier)
+* in this function we mark the node added to the frontier as
+* a closed node to avoid adding it again.
+*/
+void AddToOpen(int x, int y, int g, int h,
+               vector<vector<int>> &openlist, vector<vector<State>> &grid){
+    openlist.push_back(vector<int>{x, y, g, h});
+    grid[x][y] = State::kClosed;
+}
 
 /**
  * Implementation of A* search algorithm
